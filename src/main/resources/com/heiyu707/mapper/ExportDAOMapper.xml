@@ -1,0 +1,11 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heiyu707.dao.ExportDAO">
+
+    <!--根据type查询所有音频文件信息-->
+    <select id="findAudioByType"  resultType="UserFile">
+        select id,oldFileName,newFileName,ext,path,size,type,isImg,downcounts,uploadTime,userId
+        from t_files
+        where SUBSTRING_INDEX(type,'/',1) = 'audio'
+    </select>
+
+</mapper>

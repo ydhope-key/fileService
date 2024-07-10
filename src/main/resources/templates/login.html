@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+</head>
+<body style="background: gainsboro;">
+    <div style="text-align: center;margin-top: 180px;">
+        <h1>Welcome to heiyu707</h1>
+        <form th:action="@{/user/login}" method="post">
+            username: <input type="text" name="username" style="width:10%;border-radius: 10px;"/> <br>
+            password: <input type="password" name="password" style="width:10%;border-radius: 10px;"/> <br>
+            <input type="submit" value="登录" style="margin-top: 10px;width:5%;border-radius: 10px;">
+        </form>
+    </div>
+</body>
+</html>
