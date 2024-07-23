@@ -9,5 +9,6 @@ import java.util.List;
 @Mapper
 public interface ExportDAO {
     // 根据type查询所有的音频文件信息
-    List<UserFile> findAudioByType();
+    List<UserFile> findJSONByType(String type);
+
 }

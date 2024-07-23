@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -19,6 +21,14 @@ public class UserFileServiceImpl implements UserFileService {
     @Override
     public List<UserFile> findByUserId(Integer id) {
         return userFileDAO.findByUserId(id);
+    }
+
+    @Override
+    public List<UserFile> findByUserIdAndType(Integer id, String type) {
+        Map<String,Object> map = new HashMap<>();
+        map.put("id",id);
+        map.put("type",type);
+        return userFileDAO.findByUserIdAndType(map);
     }
 
     @Override

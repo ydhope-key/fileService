@@ -2,10 +2,10 @@
 <mapper namespace="com.heiyu707.dao.ExportDAO">
 
     <!--根据type查询所有音频文件信息-->
-    <select id="findAudioByType"  resultType="UserFile">
-        select id,oldFileName,newFileName,ext,path,size,type,isImg,downcounts,uploadTime,userId
+    <select id="findJSONByType" parameterType="String"  resultType="UserFile">
+        select id,oldFileName,newFileName,ext,path
         from t_files
-        where SUBSTRING_INDEX(type,'/',1) = 'audio'
+        where SUBSTRING_INDEX(type,'/',1) = #{type}
     </select>
 
 </mapper>

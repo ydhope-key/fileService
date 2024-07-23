@@ -19,12 +19,12 @@ public class ExportController {
     /*
      * 查询所有音频文件信息
      * */
-    @GetMapping("/findAudioJSON")
+    @GetMapping("/findJSONByFileService")
     @ResponseBody
-    public List<UserFile> findAudioJSON(HttpSession session) {
+    public List<UserFile> findJSONByType(String type,HttpSession session) {
 
         // 根据type查询所有的音频文件信息
-        List<UserFile> userFiles = exportService.findAudioByType();
+        List<UserFile> userFiles = exportService.findJSONByType(type);
         return userFiles;
     }
 }

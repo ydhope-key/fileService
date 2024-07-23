@@ -5,5 +5,5 @@ import com.heiyu707.entity.UserFile;
 import java.util.List;
 
 public interface ExportService {
-    List<UserFile> findAudioByType();
+    List<UserFile> findJSONByType(String type);
 }

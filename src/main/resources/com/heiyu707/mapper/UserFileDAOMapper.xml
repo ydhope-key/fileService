@@ -1,11 +1,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.heiyu707.dao.UserFileDAO">
 
-    <!--根据id查询对应的商品信息-->
+    <!--根据用户id查询对应的商品信息-->
     <select id="findByUserId" parameterType="Integer" resultType="UserFile">
         select id,oldFileName,newFileName,ext,path,size,type,isImg,downcounts,uploadTime,userId
         from t_files
         where userId = #{id}
+    </select>
+
+    <!--根据用户id和文件类型type查询对应的商品信息-->
+    <select id="findByUserIdAndType" parameterType="Map" resultType="UserFile">
+        select id,oldFileName,newFileName,ext,path,size,type,isImg,downcounts,uploadTime,userId
+        from t_files
+        where userId = #{id} and SUBSTRING_INDEX(type,'/',1) = #{type}
     </select>
 
     <!--保存文件信息-->

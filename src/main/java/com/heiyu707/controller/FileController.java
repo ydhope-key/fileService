@@ -24,6 +24,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -33,14 +34,20 @@ import java.util.UUID;
 @RequestMapping("/file")
 public class FileController {
 
-    @Value("${normalFileRealPath")
+    @Value("${normalFileRealPath}")
     private String normalFileRealPath;
 
     @Value("${musicFileRealPath}")
     private String musicFileRealPath;
 
+    @Value("${videoFileRealPath}")
+    private String videoFileRealPath;
+
     @Autowired
     private UserFileService userFileService;
+
+
+    DecimalFormat df1 = new DecimalFormat("0.00");
 
     /*
      * 查询所有文件信息
@@ -54,6 +61,8 @@ public class FileController {
         List<UserFile> userFiles = userFileService.findByUserId(user.getId());
         return userFiles;
     }
+
+
 
     /**
      * 删除文件
@@ -91,7 +100,8 @@ public class FileController {
         // 获取文件输入流
         FileInputStream is = new FileInputStream(new File(realPath, userFile.getNewFileName()));
         // 获取响应输出流
-        response.setHeader("content-disposition", openStyle + ";fileName=" + URLEncoder.encode(userFile.getOldFileName(), "UTF-8"));
+        response.setHeader("content-disposition", openStyle + ";fileName=" +
+                URLEncoder.encode(userFile.getOldFileName(), "UTF-8"));
         ServletOutputStream os = response.getOutputStream();
         // 文件拷贝
         IOUtils.copy(is, os);
@@ -122,7 +132,7 @@ public class FileController {
         String realPath;
         if (type.startsWith("audio") ){
             realPath = musicFileRealPath;
-        } else{
+        } else {
             realPath = normalFileRealPath;
         }
         // 日期文件夹
@@ -199,12 +209,33 @@ public class FileController {
         User user = (User) session.getAttribute("user");
         // 根据用户id查询有的文件信息
         List<UserFile> userFiles = userFileService.findByUserId(user.getId());
+        for (UserFile updateFile: userFiles){
+            updateFile.setOldFileName(updateFile.getOldFileName().replace(updateFile.getExt(),""));
+            updateFile.setSize(df1.format(Double.parseDouble(updateFile.getSize())/2024/2024)+"MB");
+        }
         // 放入作用域中
         model.addAttribute("files", userFiles);
         return "showAll"; // 逻辑名
     }
 
-
+    /*
+     * 查询某一类型文件信息
+     * */
+    @GetMapping("/findJSONByType")
+    public String findJSONByType(String type,HttpSession session,  Model model) {
+        // 在登录的session中获取用户的id
+        User user = (User) session.getAttribute("user");
+        // 根据用户id查询有的文件信息
+        List<UserFile> userFiles = userFileService.findByUserIdAndType(user.getId(),type);
+        for (UserFile updateFile: userFiles){
+            updateFile.setOldFileName(updateFile.getOldFileName().replace(updateFile.getExt(),""));
+            updateFile.setSize(df1.format(Double.parseDouble(updateFile.getSize())/2024/2024)+"MB");
+        }
+        // 放入作用域中
+        model.addAttribute("files", userFiles);
+        if ("image".equals(type)) return "showImage";
+        return "showAll"; // 逻辑名
+    }
 
 }
 

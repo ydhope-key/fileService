@@ -16,7 +16,7 @@ public class ExportServiceImpl implements ExportService{
     private ExportDAO exportDAO;
 
     @Override
-    public List<UserFile> findAudioByType() {
-        return exportDAO.findAudioByType();
+    public List<UserFile> findJSONByType(String type) {
+        return exportDAO.findJSONByType(type);
     }
 }
