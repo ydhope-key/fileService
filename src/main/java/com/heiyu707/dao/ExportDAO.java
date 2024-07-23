@@ -1,6 +1,5 @@
 package com.heiyu707.dao;
 
-import com.heiyu707.entity.User;
 import com.heiyu707.entity.UserFile;
 import org.apache.ibatis.annotations.Mapper;
 

@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -132,7 +131,9 @@ public class FileController {
         String realPath;
         if (type.startsWith("audio") ){
             realPath = musicFileRealPath;
-        } else {
+        } else if(type.startsWith("video") ) {
+            realPath = videoFileRealPath;
+        } else{
             realPath = normalFileRealPath;
         }
         // 日期文件夹
