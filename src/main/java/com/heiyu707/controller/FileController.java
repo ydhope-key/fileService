@@ -179,6 +179,8 @@ public class FileController {
             String realPath;
             if (type.startsWith("audio") ){
                 realPath = musicFileRealPath;
+            } else if(type.startsWith("video") ) {
+                realPath = videoFileRealPath;
             } else{
                 realPath = normalFileRealPath;
             }
